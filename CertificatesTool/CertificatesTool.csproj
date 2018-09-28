@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\CertificatesListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\ListViewDoubleBuffered.cs">
       <SubType>Component</SubType>
     </Compile>

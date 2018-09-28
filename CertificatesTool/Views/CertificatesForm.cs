@@ -59,48 +59,48 @@ namespace CertificatesTool.Views
             }
         }
 
-        private void validateCertificates(ListView.ListViewItemCollection items)
-        {
+        //private void validateCertificates(ListView.ListViewItemCollection items)
+        //{
 
-            foreach (ListViewItem item in items)
-            {
-                var certificate = item.Tag as System.Security.Cryptography.X509Certificates.X509Certificate2;
-                if (certificate != null)
-                {
-                    var b = Task.Run(() =>
-                      {
-                          bool valid = false;
-                          string error = null;
-                          try
-                          {
-                              valid = certificate.Verify();
-                          }
-                          catch (System.Security.Cryptography.CryptographicException ex)
-                          {
+        //    foreach (ListViewItem item in items)
+        //    {
+        //        var certificate = item.Tag as System.Security.Cryptography.X509Certificates.X509Certificate2;
+        //        if (certificate != null)
+        //        {
+        //            var b = Task.Run(() =>
+        //              {
+        //                  bool valid = false;
+        //                  string error = null;
+        //                  try
+        //                  {
+        //                      valid = certificate.Verify();
+        //                  }
+        //                  catch (System.Security.Cryptography.CryptographicException ex)
+        //                  {
 
-                              //item.ToolTipText = ex.Message;
+        //                      //item.ToolTipText = ex.Message;
 
-                          }
-                          return valid;
-                      }).Result;
+        //                  }
+        //                  return valid;
+        //              }).Result;
 
 
-                    listView1.BeginUpdate();
-                    if (!b)
-                    {
-                        item.BackColor = Color.FromArgb(255, 0, 0);
-                        item.ForeColor = Color.White;
-                    }
-                    else
-                    {
-                        item.BackColor = listView1.BackColor;
-                        item.ForeColor = listView1.ForeColor;
-                    }
-                    listView1.EndUpdate();
-                }
-            }
+        //            listView1.BeginUpdate();
+        //            if (!b)
+        //            {
+        //                item.BackColor = Color.FromArgb(255, 0, 0);
+        //                item.ForeColor = Color.White;
+        //            }
+        //            else
+        //            {
+        //                item.BackColor = listView1.BackColor;
+        //                item.ForeColor = listView1.ForeColor;
+        //            }
+        //            listView1.EndUpdate();
+        //        }
+        //    }
 
-        }
+        //}
 
         private X509Certificate2 searchCertificates(TreeNode currentNode)
         {
@@ -134,22 +134,7 @@ namespace CertificatesTool.Views
 
         private void listViewRefresh(IEnumerable<System.Security.Cryptography.X509Certificates.X509Certificate2> certificates)
         {
-            listView1.BeginUpdate();
-            listView1.Items.Clear();
-            if (certificates != null)
-            {
-                foreach (var cert in certificates)
-                {
-                    var item = listView1.Items.Add(cert.GetNameInfo(X509NameType.SimpleName, true));
-                    item.SubItems.Add(cert.SerialNumber);
-                    item.SubItems.Add(cert.NotBefore.ToShortDateString());
-                    item.SubItems.Add(cert.NotAfter.ToShortDateString());
-                    item.SubItems.Add(cert.GetKeyAlgorithm());
-                    item.Tag = cert;
-
-                }
-            }
-            listView1.EndUpdate();
+            certificatesListView1.Certificates = certificates?.ToList();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -158,7 +143,6 @@ namespace CertificatesTool.Views
             {
                 var certificates = e.Node.Tag as IEnumerable<System.Security.Cryptography.X509Certificates.X509Certificate2>;
                 this.listViewRefresh(certificates);
-                this.validateCertificates(listView1.Items);
 
             }
             else
@@ -167,15 +151,13 @@ namespace CertificatesTool.Views
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
-            var item = this.listView1.FocusedItem;
-            if (item != null && item.Tag != null)
+            var certificate = this.certificatesListView1.FocusedCertificate;
+
+            if (certificate != null)
             {
-                var certificate = item.Tag as System.Security.Cryptography.X509Certificates.X509Certificate2;
-                if (certificate != null)
-                {
-                    X509Certificate2UI.DisplayCertificate(certificate);
-                }
+                X509Certificate2UI.DisplayCertificate(certificate);
             }
+
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -196,14 +178,14 @@ namespace CertificatesTool.Views
             }
         }
 
-        
+
 
         private void chainToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (listView1.FocusedItem != null)
+            if (this.certificatesListView1.FocusedCertificate!=null)
             {
                 var chainViewForm = new ChainViewForm();
-                chainViewForm.Certificate = listView1.FocusedItem.Tag as X509Certificate2;
+                chainViewForm.Certificate = this.certificatesListView1.FocusedCertificate;
                 chainViewForm.ShowDialog(this);
                 chainViewForm.Dispose();
             }

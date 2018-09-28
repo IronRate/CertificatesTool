@@ -39,12 +39,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.chainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listView1 = new CertificatesTool.Components.ListViewDoubleBuffered();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.certificatesListView1 = new CertificatesTool.Components.CertificatesListView();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -127,57 +122,27 @@
             this.chainToolStripMenuItem.Text = "Chain...";
             this.chainToolStripMenuItem.Click += new System.EventHandler(this.chainToolStripMenuItem_Click);
             // 
-            // listView1
+            // certificatesListView1
             // 
-            this.listView1.AllowColumnReorder = true;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5});
-            this.listView1.ContextMenuStrip = this.contextMenuStrip1;
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.FullRowSelect = true;
-            this.listView1.GridLines = true;
-            this.listView1.Location = new System.Drawing.Point(257, 25);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(543, 425);
-            this.listView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.listView1.TabIndex = 3;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Issuer";
-            this.columnHeader1.Width = 168;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Serial";
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Valid from";
-            this.columnHeader3.Width = 108;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Valid to";
-            this.columnHeader4.Width = 108;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Algorithm key";
+            this.certificatesListView1.Certificates = null;
+            this.certificatesListView1.ContextMenuStrip = this.contextMenuStrip1;
+            this.certificatesListView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.certificatesListView1.FullRowSelect = true;
+            this.certificatesListView1.GridLines = true;
+            this.certificatesListView1.Location = new System.Drawing.Point(257, 25);
+            this.certificatesListView1.Name = "certificatesListView1";
+            this.certificatesListView1.Size = new System.Drawing.Size(543, 425);
+            this.certificatesListView1.TabIndex = 4;
+            this.certificatesListView1.UseCompatibleStateImageBehavior = false;
+            this.certificatesListView1.View = System.Windows.Forms.View.Details;
+            this.certificatesListView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             // 
             // CertificatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.certificatesListView1);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.toolStrip1);
@@ -199,16 +164,11 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Splitter splitter1;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private Components.ListViewDoubleBuffered listView1;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem chainToolStripMenuItem;
+        private Components.CertificatesListView certificatesListView1;
     }
 }
