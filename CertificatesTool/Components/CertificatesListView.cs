@@ -34,7 +34,9 @@ namespace CertificatesTool.Components
             this.columnHeader6,
             this.columnHeader2,
             this.columnHeader3,
-            this.columnHeader4});
+            this.columnHeader4,
+            this.columnHeader5
+            });
 
             // 
             // columnHeader1

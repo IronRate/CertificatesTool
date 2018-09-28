@@ -61,7 +61,6 @@ namespace CertificatesTool.Views
                 finally
                 {
                     refreshListView();
-                    verifyCertificates();
                 }
             }
         }
@@ -79,72 +78,20 @@ namespace CertificatesTool.Views
         {
             if (this._chain != null)
             {
-                listView1.BeginUpdate();
-                listView1.Items.Clear();
-                List<ListViewItem> items = new List<ListViewItem>(_chain.ChainElements.Count);
+
+                List<X509Certificate2> certificates = new List<X509Certificate2>(this._chain.ChainElements.Count);
                 for (var i = 0; i <= this._chain.ChainElements.Count - 1; i++)
                 {
                     var certificate = _chain.ChainElements[i].Certificate;
-                    var item = new ListViewItem();
-                    item.Text = certificate.GetNameInfo(X509NameType.SimpleName, true);
-                    item.SubItems.Add(certificate.GetNameInfo(X509NameType.SimpleName, false));
-                    item.SubItems.Add(certificate.NotBefore.ToShortDateString());
-                    item.SubItems.Add(certificate.NotAfter.ToShortDateString());
-                    items.Add(item);
+                    certificates.Add(certificate);
                 }
-                listView1.Items.AddRange(items.ToArray());
-                listView1.EndUpdate();
-                //listView1.Items[0].Focus();
+                this.certificatesListView1.Certificates = certificates;
 
-                this.fetchStatus(listView1.Items[0]);
+                this.fetchStatus(this.certificatesListView1.Items[0]);
             }
         }
 
-        protected void verifyCertificates()
-        {
-            if (_chain == null)
-                return;
 
-            for (var i = 0; i <= this._chain.ChainElements.Count - 1; i++)
-            {
-
-                var certificate = _chain.ChainElements[i].Certificate;
-                if (certificate != null)
-                {
-                    var b = Task.Run(() =>
-                    {
-                        bool valid = false;
-                        string error = null;
-                        try
-                        {
-                            valid = certificate.Verify();
-                        }
-                        catch (System.Security.Cryptography.CryptographicException ex)
-                        {
-
-                            //item.ToolTipText = ex.Message;
-
-                        }
-                        return valid;
-                    }).Result;
-
-
-                    listView1.BeginUpdate();
-                    var item = listView1.Items[i];
-                    if (!b)
-                    {
-                        item.BackColor = Color.FromArgb(255, 0, 0);
-                        item.ForeColor = Color.White;
-                    }
-                    else
-                    {
-                        item.BackColor = listView1.BackColor;
-                        item.ForeColor = listView1.ForeColor;
-                    }
-                    listView1.EndUpdate();
-                }
-            }
-        }
 
         protected override void OnClosed(EventArgs e)
         {
@@ -156,7 +103,7 @@ namespace CertificatesTool.Views
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.fetchStatus(listView1.FocusedItem);
+            this.fetchStatus(this.certificatesListView1.FocusedItem);
         }
 
         private void fetchStatus(ListViewItem item)
@@ -179,15 +126,13 @@ namespace CertificatesTool.Views
 
         private void listView1_DoubleClick(object sender, EventArgs e)
         {
-            var item = this.listView1.FocusedItem;
-            if (item != null)
+
+            var certificate = this.certificatesListView1.FocusedCertificate;
+            if (certificate != null)
             {
-                var certificate = this._chain.ChainElements[item.Index].Certificate;
-                if (certificate != null)
-                {
-                    X509Certificate2UI.DisplayCertificate(certificate);
-                }
+                X509Certificate2UI.DisplayCertificate(certificate);
             }
+
         }
     }
 }
