@@ -155,7 +155,7 @@ namespace CertificatesTool.Views
 
             if (certificate != null)
             {
-                X509Certificate2UI.DisplayCertificate(certificate);
+                certificate.Show();
             }
 
         }

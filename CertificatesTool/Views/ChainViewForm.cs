@@ -130,7 +130,7 @@ namespace CertificatesTool.Views
             var certificate = this.certificatesListView1.FocusedCertificate;
             if (certificate != null)
             {
-                X509Certificate2UI.DisplayCertificate(certificate);
+                certificate.Show();
             }
 
         }

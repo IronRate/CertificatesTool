@@ -21,5 +21,15 @@ namespace CertificatesTool.Extensions
 
             return false;
         }
+
+        public static void Show(this X509Certificate2 certificate)
+        {
+            X509Certificate2UI.DisplayCertificate(certificate);
+        }
+
+        public static void Show(this X509Certificate2 certificate, IntPtr parentWindowHandle)
+        {
+            X509Certificate2UI.DisplayCertificate(certificate, parentWindowHandle);
+        }
     }
 }
