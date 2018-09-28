@@ -12,6 +12,8 @@ namespace CertificatesTool.Components
         public ListViewDoubleBuffered():base()
         {
             this.DoubleBuffered = true;
+            this.FullRowSelect = true;
+            this.GridLines = true;
         }
 
         protected override bool DoubleBuffered { get => base.DoubleBuffered; set => base.DoubleBuffered = value; }

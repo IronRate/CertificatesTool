@@ -108,16 +108,20 @@ namespace CertificatesTool.Views
             {
                 foreach (TreeNode node in currentNode.Nodes)
                 {
-                    var findedCertificate=searchCertificates(node);
+                    var findedCertificate = searchCertificates(node);
                     if (findedCertificate != null)
                         return findedCertificate;
                 }
             }
-            else {
+            else
+            {
                 var certificates = currentNode.Tag as IEnumerable<X509Certificate2>;
-                if (certificates != null) {
-                    foreach (var certificate in certificates) {
-                        if (certificate.Contains(this.searchString)) {
+                if (certificates != null)
+                {
+                    foreach (var certificate in certificates)
+                    {
+                        if (certificate.Contains(this.searchString))
+                        {
                             currentNode.Parent.Expand();
                             treeView1.SelectedNode = currentNode;
                             return certificate;
@@ -182,11 +186,26 @@ namespace CertificatesTool.Views
         private void toolStripButton2_Click(object sender, EventArgs e)
         {
             this.searchString = toolStripTextBox1.Text;
-            if (!string.IsNullOrWhiteSpace(this.searchString)) {
-                var findedCertificate=this.searchCertificates(this.rootNode);
-                if (findedCertificate != null) {
-                    
+            if (!string.IsNullOrWhiteSpace(this.searchString))
+            {
+                var findedCertificate = this.searchCertificates(this.rootNode);
+                if (findedCertificate != null)
+                {
+
                 }
+            }
+        }
+
+        
+
+        private void chainToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView1.FocusedItem != null)
+            {
+                var chainViewForm = new ChainViewForm();
+                chainViewForm.Certificate = listView1.FocusedItem.Tag as X509Certificate2;
+                chainViewForm.ShowDialog(this);
+                chainViewForm.Dispose();
             }
         }
     }

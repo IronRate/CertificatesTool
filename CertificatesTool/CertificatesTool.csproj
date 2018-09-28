@@ -49,6 +49,7 @@
     <Compile Include="Components\ListViewDoubleBuffered.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Extensions\ListViewItemExtension.cs" />
     <Compile Include="Extensions\X509CertificateExtensions.cs" />
     <Compile Include="Models\CertificatesStoreLocation.cs" />
     <Compile Include="Program.cs" />
@@ -59,6 +60,12 @@
     </Compile>
     <Compile Include="Views\CertificatesForm.Designer.cs">
       <DependentUpon>CertificatesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChainViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ChainViewForm.Designer.cs">
+      <DependentUpon>ChainViewForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -71,6 +78,9 @@
     </Compile>
     <EmbeddedResource Include="Views\CertificatesForm.resx">
       <DependentUpon>CertificatesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ChainViewForm.resx">
+      <DependentUpon>ChainViewForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
