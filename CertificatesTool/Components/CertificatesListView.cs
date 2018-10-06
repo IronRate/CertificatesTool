@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace CertificatesTool.Components
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
 
         public CertificatesListView() : base()
         {
@@ -29,13 +31,15 @@ namespace CertificatesTool.Components
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader6,
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5
+            this.columnHeader5,
+            this.columnHeader7
             });
 
             // 
@@ -62,15 +66,16 @@ namespace CertificatesTool.Components
             // 
             this.columnHeader5.Text = "Algorithm key";
             this.columnHeader6.Text = "Owner";
+            this.columnHeader7.Text = "Container name";
 
             this.Resize += CertificatesListView_Resize;
-            
+
 
         }
 
         private void CertificatesListView_Resize(object sender, EventArgs e)
         {
-            this.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+
         }
 
         /// <summary>
@@ -78,7 +83,7 @@ namespace CertificatesTool.Components
         /// </summary>
         public IList<X509Certificate2> Certificates
         {
-            get => _certificates; set { _certificates = value; listViewRefresh(_certificates); this.validateCertificates(this.Items);OnResize(null); }
+            get => _certificates; set { _certificates = value; listViewRefresh(_certificates); this.validateCertificates(this.Items); OnResize(null); }
         }
 
         public X509Certificate2 FocusedCertificate
@@ -96,26 +101,34 @@ namespace CertificatesTool.Components
 
         private void listViewRefresh(IEnumerable<System.Security.Cryptography.X509Certificates.X509Certificate2> certificates)
         {
+            Services.CryptographyService cryptographyService = new Services.CryptographyService();
             this.BeginUpdate();
             this.Items.Clear();
+            this.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None);
             if (certificates != null)
             {
                 foreach (var cert in certificates)
                 {
-                    var item = this.Items.Add(cert.GetNameInfo(X509NameType.SimpleName, true));
-                    item.SubItems.Add(cert.GetNameInfo(X509NameType.SimpleName, false));
-                    item.SubItems.Add(cert.SerialNumber);
-                    item.SubItems.Add(cert.NotBefore.ToShortDateString());
-                    item.SubItems.Add(cert.NotAfter.ToShortDateString());
-                    item.SubItems.Add(cert.GetKeyAlgorithm());
+                    var info = cryptographyService.GetInfo(cert);
+                    var item = this.Items.Add(info.IssuerName);
+                    item.SubItems.Add(info.OwnerName);
+                    item.SubItems.Add(info.SerialNumber);
+                    item.SubItems.Add(info.NotBefore);
+                    item.SubItems.Add(info.NotAfter);
+                    item.SubItems.Add(info.KeyAlgorithmName);
+                    item.SubItems.Add(info.ContainerName);
+
+
                 }
             }
+            this.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             this.EndUpdate();
         }
 
         private void validateCertificates(ListView.ListViewItemCollection items)
         {
-
+            //this.BeginUpdate();
+            this.AutoResizeColumns(ColumnHeaderAutoResizeStyle.None);
             foreach (ListViewItem item in items)
             {
                 var certificate = _certificates[item.Index];
@@ -139,7 +152,6 @@ namespace CertificatesTool.Components
                     }).Result;
 
 
-                    this.BeginUpdate();
                     if (!b)
                     {
                         item.BackColor = Color.FromArgb(255, 0, 0);
@@ -150,10 +162,11 @@ namespace CertificatesTool.Components
                         item.BackColor = this.BackColor;
                         item.ForeColor = this.ForeColor;
                     }
-                    this.EndUpdate();
+
                 }
             }
-
+            this.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            //this.EndUpdate();
         }
     }
 }
