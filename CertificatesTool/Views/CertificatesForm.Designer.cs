@@ -40,6 +40,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.chainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.certificatesListView1 = new CertificatesTool.Components.CertificatesListView();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -105,20 +106,21 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.chainToolStripMenuItem});
+            this.chainToolStripMenuItem,
+            this.exportToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(115, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 92);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(119, 22);
             this.toolStripMenuItem1.Text = "Open...";
             // 
             // chainToolStripMenuItem
             // 
             this.chainToolStripMenuItem.Name = "chainToolStripMenuItem";
-            this.chainToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.chainToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.chainToolStripMenuItem.Text = "Chain...";
             this.chainToolStripMenuItem.Click += new System.EventHandler(this.chainToolStripMenuItem_Click);
             // 
@@ -136,6 +138,13 @@
             this.certificatesListView1.UseCompatibleStateImageBehavior = false;
             this.certificatesListView1.View = System.Windows.Forms.View.Details;
             this.certificatesListView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exportToolStripMenuItem.Text = "Export ...";
+            this.exportToolStripMenuItem.Click += new System.EventHandler(this.exportToolStripMenuItem_Click);
             // 
             // CertificatesForm
             // 
@@ -170,5 +179,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem chainToolStripMenuItem;
         private Components.CertificatesListView certificatesListView1;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
     }
 }

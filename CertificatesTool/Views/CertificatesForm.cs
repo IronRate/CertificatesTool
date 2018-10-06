@@ -190,6 +190,19 @@ namespace CertificatesTool.Views
                 chainViewForm.Dispose();
             }
         }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.certificatesListView1.FocusedCertificate != null) {
+                SaveFileDialog fileDialog = new SaveFileDialog();
+                if (fileDialog.ShowDialog(this) == DialogResult.OK) {
+                    var containerColumn = this.certificatesListView1.GetColumnFromFocuseRow(6);
+                    var containerName = containerColumn.Text.Substring(containerColumn.Text.IndexOf(@"\")+1);
+                    Services.RegistryService registryService = new Services.RegistryService();
+                    registryService.Export(fileDialog.FileName, @"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Crypto Pro\Settings\Keys"+containerName);
+                }
+            }
+        }
     }
 }
 

@@ -99,6 +99,13 @@ namespace CertificatesTool.Components
             }
         }
 
+        public ListViewItem.ListViewSubItem GetColumnFromFocuseRow(int i) {
+            if (this.FocusedItem != null) {
+                return this.FocusedItem.SubItems[i];
+            }
+            return null;
+        }
+
         private void listViewRefresh(IEnumerable<System.Security.Cryptography.X509Certificates.X509Certificate2> certificates)
         {
             Services.CryptographyService cryptographyService = new Services.CryptographyService();
